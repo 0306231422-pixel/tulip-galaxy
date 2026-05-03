@@ -430,7 +430,7 @@ function createFloatingTexts() {
   const texts = [
     "Luôn Luôn Vui Vẻ Nhá",
     "Chúc You Sáng Hạnh Phúc",
-    "Gửi You Tôi Yên Bình",
+    "Gửi You Tối Yên Bình",
     "Thiên Thu Vô Ưu",
     "Vạn Kiếp Bức Phá"
   ]
