@@ -424,6 +424,60 @@ glowGeo.setAttribute('position', new THREE.BufferAttribute(glowPos, 3))
 const flowerEffect = createFlowerEffect()
 flowerGroup.add(flowerEffect.group)
 
+// ================= 💬 FLOATING TEXT =================
+function createFloatingTexts() {
+
+  const texts = [
+    "Luôn Luôn Vui Vẻ Nhá",
+    "Chúc You Sáng Hạnh Phúc",
+    "Gửi You Tôi Yên Bình",
+    "Thiên Thu Vô Ưu",
+    "Vạn Kiếp Bức Phá"
+  ]
+
+  const container = document.createElement("div")
+  container.style.position = "fixed"
+  container.style.top = "0"
+  container.style.left = "0"
+  container.style.width = "100%"
+  container.style.height = "100%"
+  container.style.pointerEvents = "none"
+  container.style.overflow = "hidden"
+  document.body.appendChild(container)
+
+  const elements = []
+
+  texts.forEach((text, i) => {
+
+    const el = document.createElement("div")
+    el.innerText = text
+
+    el.style.position = "absolute"
+    el.style.whiteSpace = "nowrap"
+    el.style.fontSize = "20px"
+    el.style.fontWeight = "bold"
+
+    // 🌈 màu đẹp nhẹ
+    el.style.color = `hsl(${Math.random()*360}, 80%, 70%)`
+    el.style.textShadow = "0 0 10px rgba(255,255,255,0.7)"
+
+    el.style.left = Math.random() * 100 + "%"
+    el.style.top = (20 + i * 12) + "%"
+
+    container.appendChild(el)
+
+    elements.push({
+      el,
+      speed: 0.8 + Math.random() * 0.5,
+      x: Math.random() * window.innerWidth
+    })
+  })
+
+  return elements
+}
+
+const floatingTexts = createFloatingTexts()
+
 // ================= ANIMATE =================
 function animate(time){
   requestAnimationFrame(animate)
@@ -454,6 +508,17 @@ for (let i = 0; i < flowerEffect.velocity.length; i++) {
 }
 
 flowerEffect.particles.geometry.attributes.position.needsUpdate = true
+
+// 💬 update text chạy ngang
+floatingTexts.forEach(t => {
+  t.x += t.speed
+
+  if (t.x > window.innerWidth + 200) {
+    t.x = -200
+  }
+
+  t.el.style.transform = `translateX(${t.x}px)`
+})
 
 // 🌟 glow pulse nhẹ
 flowerEffect.group.children[0].material.opacity =
